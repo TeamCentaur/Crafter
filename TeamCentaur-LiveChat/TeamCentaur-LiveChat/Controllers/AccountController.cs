@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TeamCentaur_LiveChat.Models;
+using System.IO;
 
 namespace TeamCentaur_LiveChat.Controllers
 {
@@ -86,7 +87,15 @@ namespace TeamCentaur_LiveChat.Controllers
             if (ModelState.IsValid)
             {
                 // Create a local login before signing in the user
-                var user = new User(model.UserName);
+                var user = new ApplicationUser() 
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    City = model.City,
+                    Age = model.Age,
+                    Description = model.Description,
+                    ImageUrl = "/Uploaded_Files/" + Properties.Settings.Default.DefaultImage
+                };
                 var result = await IdentityManager.Users.CreateLocalUserAsync(user, model.Password);
                 if (result.Success)
                 {
@@ -304,6 +313,40 @@ namespace TeamCentaur_LiveChat.Controllers
                 IdentityManager = null;
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Save(IEnumerable<HttpPostedFileBase> attachments)
+        {
+            System.Diagnostics.Trace.WriteLine("SavinG FiLe HeRe");
+            // The Name of the Upload component is "attachments"
+            string imageLocation = string.Empty;
+            foreach (var file in attachments)
+            {
+                // Some browsers send file names with full path. We only care about the file name.
+                var fileName = Path.GetFileName(file.FileName);
+                var destinationPath = Path.Combine(Server.MapPath("~/Uploaded_Files"), fileName);
+                imageLocation = "/Uploaded_Files/"+fileName;
+                file.SaveAs(destinationPath);
+            }
+
+            using(ApplicationDbContext context = new ApplicationDbContext())
+	        {
+                var user = context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                user.ImageUrl = imageLocation;
+                context.SaveChanges();
+	        }
+            // Return an empty string to signify success
+            return Content("");
+        }
+
+        [ActionName("Avatar")]
+        public ActionResult GetMyAvatar()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var user = context.Users.FirstOrDefault(u=> u.UserName == User.Identity.Name);
+            var avatar = user.ImageUrl;
+            ViewBag.Avatar = avatar;
+            return PartialView();
         }
 
         #region Helpers

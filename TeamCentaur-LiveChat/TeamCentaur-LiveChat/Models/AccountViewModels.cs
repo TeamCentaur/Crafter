@@ -59,5 +59,20 @@ namespace TeamCentaur_LiveChat.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
+
+        [Display(Name = "Image Url")]
+        public string ImageUrl { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Age")]
+        public int Age { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
     }
 }

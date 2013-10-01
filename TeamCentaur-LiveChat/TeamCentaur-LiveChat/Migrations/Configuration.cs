@@ -5,11 +5,12 @@ namespace TeamCentaur_LiveChat.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<TeamCentaur_LiveChat.Models.ApplicationDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<TeamCentaur_LiveChat.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(TeamCentaur_LiveChat.Models.ApplicationDbContext context)

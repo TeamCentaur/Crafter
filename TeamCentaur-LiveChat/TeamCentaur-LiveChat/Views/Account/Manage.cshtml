@@ -14,11 +14,23 @@
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
+            
+            @(Html.Kendo()
+                .Upload()
+                .Multiple(false)
+                .Name("attachments")
+                .Async(async =>
+                {
+                    async.Save("Save", "Account");
+
+                }))
         }
         else
         {
             @Html.Partial("_SetPasswordPartial")
         }
+
+
 
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
