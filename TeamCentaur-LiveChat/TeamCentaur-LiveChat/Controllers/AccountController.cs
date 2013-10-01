@@ -18,7 +18,7 @@ namespace TeamCentaur_LiveChat.Controllers
     {
         public AccountController() 
         {
-            IdentityManager = new AuthenticationIdentityManager(new IdentityStore());
+            IdentityManager = new AuthenticationIdentityManager(new IdentityStore(new ApplicationDbContext()));
         }
 
         public AccountController(AuthenticationIdentityManager manager)
