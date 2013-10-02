@@ -76,7 +76,7 @@ namespace Crafter.Data.Migrations
                    Difficulty = "Easy",
                    Description = "Description " + i.ToString(),
                    CreatedOn = DateTime.Now,
-                   CompletionTime = i.ToString() + " hours",
+                   CompletionTime = i.ToString() + "6 hours",
                    EquipmentUsed = "no shit is used in these tutorials",
                    User = context.Users.FirstOrDefault()
                };

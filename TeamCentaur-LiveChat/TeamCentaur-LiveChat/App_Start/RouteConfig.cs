@@ -13,6 +13,14 @@ namespace TeamCentaur_LiveChat
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Users",
+            //    url: "{controller}/{userName}",
+            //    defaults: new { controller = "Users", action = "GetProfile", userName = UrlParameter.Optional }
+            //);
+
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

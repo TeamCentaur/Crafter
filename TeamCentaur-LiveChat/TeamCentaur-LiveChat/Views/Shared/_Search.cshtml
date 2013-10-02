@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeamCentaur_LiveChat.Controllers.UserViewModel>
+﻿@model IEnumerable<TeamCentaur_LiveChat.ViewModels.SimpleUserViewModel>
 
 @(Html.Kendo()
     .AutoComplete()
@@ -12,12 +12,11 @@
     .Events(e =>
     {
         e.Change("alertMessage");
-        
     }))
 
 <script>
 
     function alertMessage(e) {
-        window.location.href = "/Home/Users?query=" + e.sender.value();
+        window.location.href = "/Users/All?query=" + e.sender.value();
     }
 </script>

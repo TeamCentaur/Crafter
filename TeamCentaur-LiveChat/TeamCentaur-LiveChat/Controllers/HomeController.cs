@@ -8,7 +8,7 @@ using TeamCentaur_LiveChat.Models;
 using Crafter.Models;
 using Crafter.Data;
 
-namespace TeamCentaur_LiveChat.Controllers
+namespace TeamCentaurLiveChat.Controllers
 {
     public class HomeController : Controller
     {
@@ -35,42 +35,8 @@ namespace TeamCentaur_LiveChat.Controllers
         {
             var context = new CrafterContext();
 
-            var users = context.Users.Select(UserViewModel.FromUser);
+            var users = context.Users.Select(TeamCentaur_LiveChat.ViewModels.SimpleUserViewModel.FromUser);
             return PartialView("_Search", users);
-        }
-
-        public ActionResult Users()
-        {
-            var context = new CrafterContext();
-
-            var data = context.Users;
-
-            var users = data.AsQueryable();
-            string query = Request.Params["query"];
-            if (query != null)
-            {
-                users = data.Where(u => u.UserName.ToLower().Contains(query.ToLower()));
-            }
-            var models = users.Select(UserViewModel.FromUser);
-            return View("Users", models);
-        }
-    }
-
-    public class UserViewModel
-    {
-        public string UserName { get; set; }
-        public string Id { get; set; }
-
-        public static System.Linq.Expressions.Expression<Func<ApplicationUser, UserViewModel>> FromUser
-        {
-            get
-            {
-                return x => new UserViewModel()
-                {
-                    UserName = x.UserName,
-                    Id = x.Id
-                };
-            }
         }
 
         

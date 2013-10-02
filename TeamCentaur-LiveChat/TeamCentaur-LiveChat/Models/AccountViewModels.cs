@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TeamCentaur_LiveChat.Models 
+namespace TeamCentaur_LiveChat.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
