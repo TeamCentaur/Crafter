@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Crafter.Data;
+using Crafter.Data.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using TeamCentaur_LiveChat.Migrations;
 using TeamCentaur_LiveChat.Models;
 
 namespace TeamCentaur_LiveChat
@@ -23,10 +24,12 @@ namespace TeamCentaur_LiveChat
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<ApplicationDbContext>(
-                new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
 
-            var db = new ApplicationDbContext();
+
+            Database.SetInitializer<CrafterContext>(
+                new MigrateDatabaseToLatestVersion<CrafterContext, Configuration>());
+
+            var db = new CrafterContext();
             db.Database.Initialize(true);
         }
     }
