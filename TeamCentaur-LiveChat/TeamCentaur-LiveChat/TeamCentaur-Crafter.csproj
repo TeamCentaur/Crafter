@@ -171,7 +171,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,7 +255,9 @@
     <Content Include="Scripts\Kendo\kendo.autocomplete.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -292,6 +293,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crafter.Data\Crafter.Data.csproj">
+      <Project>{89816c73-f550-4e85-bd10-8a3cd599381c}</Project>
+      <Name>Crafter.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crafter.Models\Crafter.Models.csproj">
+      <Project>{742ad513-ebc3-4d39-9730-caa043c13610}</Project>
+      <Name>Crafter.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
