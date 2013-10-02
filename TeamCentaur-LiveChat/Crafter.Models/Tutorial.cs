@@ -19,16 +19,16 @@ namespace Crafter.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(500, MinimumLength=10, ErrorMessage = "Description must be between {2} and {1} symbols.")]
+        [StringLength(500, MinimumLength = 10, ErrorMessage = "Description must be between {2} and {1} symbols.")]
         public string Description { get; set; }
 
         public virtual ICollection<Step> Steps { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength=4, ErrorMessage = "Title must be between {2} and {1} symbols.")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Title must be between {2} and {1} symbols.")]
         public string Title { get; set; }
 
-        public uint Likes { get; set; }
+        public int Likes { get; set; }
 
         public string EquipmentUsed { get; set; }
 

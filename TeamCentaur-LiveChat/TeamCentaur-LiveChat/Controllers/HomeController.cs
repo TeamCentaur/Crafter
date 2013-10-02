@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace TeamCentaur_LiveChat.Controllers
+namespace TeamCentaurLiveChat.Controllers
 {
     public class HomeController : Controller
     {
