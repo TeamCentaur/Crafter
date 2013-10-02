@@ -346,7 +346,7 @@ namespace TeamCentaur_LiveChat.Controllers
             var user = context.Users.FirstOrDefault(u=> u.UserName == User.Identity.Name);
             var avatar = user.ImageUrl;
             ViewBag.Avatar = avatar;
-            return PartialView();
+            return PartialView("_Avatar");
         }
 
         #region Helpers
