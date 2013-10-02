@@ -8,4 +8,5 @@
 @foreach (var user in Model)
 {
     <div>@user.UserName</div>
+    @Html.ActionLink("Details...", "GetProfile", "Users", new { username = @user.UserName }, null)
 }

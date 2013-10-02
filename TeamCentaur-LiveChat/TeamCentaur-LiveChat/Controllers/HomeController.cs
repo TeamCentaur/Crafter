@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TeamCentaur_LiveChat.Models;
+using Crafter.Models;
+using Crafter.Data;
 
 namespace TeamCentaur_LiveChat.Controllers
 {
@@ -31,7 +33,7 @@ namespace TeamCentaur_LiveChat.Controllers
 
         public ActionResult Search()
         {
-            var context = new ApplicationDbContext();
+            var context = new CrafterContext();
 
             var users = context.Users.Select(UserViewModel.FromUser);
             return PartialView("_Search", users);
@@ -39,7 +41,7 @@ namespace TeamCentaur_LiveChat.Controllers
 
         public ActionResult Users()
         {
-            var context = new ApplicationDbContext();
+            var context = new CrafterContext();
 
             var data = context.Users;
 
