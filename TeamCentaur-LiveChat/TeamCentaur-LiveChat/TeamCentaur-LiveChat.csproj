@@ -282,10 +282,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\Kendo\jquery.min.map" />
     <Content Include="Views\Account\Avatar.cshtml" />
+    <Content Include="Views\Shared\_Search.cshtml" />
+    <Content Include="Views\Home\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploaded_Files\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

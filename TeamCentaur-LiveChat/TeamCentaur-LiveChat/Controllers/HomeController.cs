@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeamCentaur_LiveChat.Models;
 
 namespace TeamCentaur_LiveChat.Controllers
 {
@@ -28,6 +29,48 @@ namespace TeamCentaur_LiveChat.Controllers
             return View();
         }
 
-       
+        public ActionResult Search()
+        {
+            var context = new ApplicationDbContext();
+
+            var users = context.Users.Select(UserViewModel.FromUser);
+            return PartialView("_Search", users);
+        }
+
+        public ActionResult Users()
+        {
+            var context = new ApplicationDbContext();
+
+            var data = context.Users;
+
+            var users = data.AsQueryable();
+            string query = Request.Params["query"];
+            if (query != null)
+            {
+                users = data.Where(u => u.UserName.ToLower().Contains(query.ToLower()));
+            }
+            var models = users.Select(UserViewModel.FromUser);
+            return View("Users", models);
+        }
+    }
+
+    public class UserViewModel
+    {
+        public string UserName { get; set; }
+        public string Id { get; set; }
+
+        public static System.Linq.Expressions.Expression<Func<ApplicationUser, UserViewModel>> FromUser
+        {
+            get
+            {
+                return x => new UserViewModel()
+                {
+                    UserName = x.UserName,
+                    Id = x.Id
+                };
+            }
+        }
+
+        
     }
 }

@@ -27,6 +27,7 @@
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
+                    @Html.Action("Search", "Home")
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
@@ -37,6 +38,7 @@
         <hr />
         <footer>
             @Html.Kendo().DatePicker().Animation(true).Name("SomeName").Min(DateTime.Now.AddMonths(-2)).Max(DateTime.Now.AddMonths(2))
+            @Html.Kendo().Editor().Name("EditMe").Value("asd")
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>

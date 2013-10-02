@@ -1,0 +1,23 @@
+﻿@model IEnumerable<TeamCentaur_LiveChat.Controllers.UserViewModel>
+
+@(Html.Kendo()
+    .AutoComplete()
+    .Name("Search")
+    .Placeholder("Search...")
+    .HtmlAttributes(new { @class = "nav pull-right" })
+    .BindTo(Model)
+    .DataTextField("UserName")
+    .Filter(FilterType.Contains)
+    .MinLength(3)
+    .Events(e =>
+    {
+        e.Change("alertMessage");
+        
+    }))
+
+<script>
+
+    function alertMessage(e) {
+        window.location.href = "/Home/Users?query=" + e.sender.value();
+    }
+</script>

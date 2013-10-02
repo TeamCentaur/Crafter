@@ -1,0 +1,11 @@
+﻿@model IEnumerable<TeamCentaur_LiveChat.Controllers.UserViewModel>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+@foreach (var user in Model)
+{
+    <div>@user.UserName</div>
+}
