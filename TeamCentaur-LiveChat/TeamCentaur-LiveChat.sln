@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCentaur-LiveChat", "TeamCentaur-LiveChat\TeamCentaur-LiveChat.csproj", "{C70C1D0E-49B1-4B09-A745-21E6EACC9E48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCentaur-Crafter", "TeamCentaur-LiveChat\TeamCentaur-Crafter.csproj", "{C70C1D0E-49B1-4B09-A745-21E6EACC9E48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crafter.Models", "Crafter.Models\Crafter.Models.csproj", "{742AD513-EBC3-4D39-9730-CAA043C13610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crafter.Data", "Crafter.Data\Crafter.Data.csproj", "{89816C73-F550-4E85-BD10-8A3CD599381C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C70C1D0E-49B1-4B09-A745-21E6EACC9E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C70C1D0E-49B1-4B09-A745-21E6EACC9E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C70C1D0E-49B1-4B09-A745-21E6EACC9E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742AD513-EBC3-4D39-9730-CAA043C13610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742AD513-EBC3-4D39-9730-CAA043C13610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742AD513-EBC3-4D39-9730-CAA043C13610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742AD513-EBC3-4D39-9730-CAA043C13610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89816C73-F550-4E85-BD10-8A3CD599381C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89816C73-F550-4E85-BD10-8A3CD599381C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89816C73-F550-4E85-BD10-8A3CD599381C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89816C73-F550-4E85-BD10-8A3CD599381C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
