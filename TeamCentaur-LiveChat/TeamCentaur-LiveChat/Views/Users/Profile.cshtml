@@ -1,0 +1,37 @@
+﻿@model TeamCentaur_LiveChat.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h1>Profile of @Model.UserName </h1>
+
+<div id="user-profile">
+    <img src="@Model.ImageUrl" />
+
+    <div><span class="boldText">Username: </span><span>@Model.UserName </span> </div>
+    <div><span class="boldText">Age: </span><span>@Model.Age </span> </div>
+    <div><span class="boldText">Email: </span> <span>@Model.Email</span> </div>
+    <div><span class="boldText">City: </span><span>@Model.City </span> </div>
+    <div><span class="boldText">About Me: </span><span>@Model.Description</span> </div>
+
+</div>
+
+@{ if (@Model.Tutorials.Any())
+ {
+    <h3>Tutorials:</h3>
+    <div class="listView">
+        @(Html.Kendo().ListView<TeamCentaur_LiveChat.ViewModels.TutorialViewModel>()
+          .Name("grid")
+               .TagName("div")
+               .ClientTemplateId("tut-template")
+      .BindTo(@Model.Tutorials)
+      .Pageable())
+    </div>
+ }
+}
+<script type="text/x-kendo-template" id="tut-template">
+    <div>
+        <a href="Tutorial/#:Id#">#: Title#</a>
+    </div>
+</script>

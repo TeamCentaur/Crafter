@@ -10,7 +10,7 @@
 
 .field-validation-valid {
     display: none;
- }
+}
 
 input.input-validation-error {
     border: 1px solid #b94a48;
@@ -30,6 +30,28 @@ input[type="checkbox"].input-validation-error {
 
 /* styles for removing the background from form */
 .no-color {
-  background-color: white;
-  border-style:none;
+    background-color: white;
+    border-style: none;
+}
+
+#user-profile {
+    padding: 20px;
+}
+
+    #user-profile div {
+        margin-top: 20px;
+    }
+
+    #user-profile img {
+        height: 180px;
+        width: 150px;
+    }
+
+    #user-profile .boldText {
+        font-weight: bold;
+    }
+
+#grid div a {
+    font-size: 18px;
+    text-decoration: none;
 }
