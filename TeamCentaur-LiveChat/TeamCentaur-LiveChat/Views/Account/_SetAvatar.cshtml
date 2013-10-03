@@ -1,0 +1,17 @@
+﻿<fieldset class="form-horizontal">
+    <legend>Change Avatar</legend>
+    <div class="control-group">
+        @Html.Label("Upload Image")
+        <div class="controls">
+            @(Html.Kendo()
+                .Upload()
+                .Multiple(false)
+                .Name("attachments")
+                .Async(async =>
+                {
+                    async.Save("Save", "Account");
+
+                }))
+        </div>
+    </div>
+</fieldset>

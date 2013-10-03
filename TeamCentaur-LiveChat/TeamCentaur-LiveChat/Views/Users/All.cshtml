@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+@(Html.Kendo().ListView<TeamCentaur_LiveChat.ViewModels.SimpleUserViewModel>()
+    .Name("ListView")
+    .TagName("div")
+    .ClientTemplateId("template")
+    .DataSource(dataSource => dataSource
+            .Read(read => 
+                 read.Action("GetUsers", "Users", new { query = ViewBag.Query })
+            )
+    )
+    .Pageable()
+)
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="person">
+        
+        <h3><a href="/Users/GetProfile?username=#: UserName #">#: UserName#</a></h3>
+    </div>
+</script>
