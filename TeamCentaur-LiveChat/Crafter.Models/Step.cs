@@ -14,7 +14,7 @@ namespace Crafter.Models
         }
 
         public int Id { get; set; }
-
+        
         public virtual ICollection<Image> Images { get; set; }
 
         [Required]

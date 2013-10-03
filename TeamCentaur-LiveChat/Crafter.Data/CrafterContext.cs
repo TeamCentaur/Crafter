@@ -11,14 +11,44 @@ namespace Crafter.Data
 {
     public class CrafterContext : IdentityDbContextWithCustomUser<ApplicationUser>
     {
-        public IDbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        public IDbSet<Tutorial> Tutorials { get; set; }
+        public DbSet<Tutorial> Tutorials { get; set; }
 
-        public IDbSet<Step> Steps { get; set; }
+        public DbSet<Step> Steps { get; set; }
 
-        public IDbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
-        public IDbSet<Image> Images { get; set; }
+        public DbSet<Image> Images { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasOptional(a => a.Tutorials)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<Tutorial>()
+            //    .HasOptional(t => t.Comments)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<Tutorial>()
+            //    .HasOptional(t => t.Images)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<Tutorial>()
+            //    .HasOptional(t => t.Steps)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<Step>()
+            //    .HasOptional(s => s.Images)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -167,6 +167,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\CategoryDisplayModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ImageDisplayModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\StepDisplayModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\TutorialDisplayModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -242,6 +246,9 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_TutorialsGrid.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TutorialEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\StepEdit.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -261,6 +268,7 @@
     <Content Include="Scripts\Kendo\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\Kendo\kendo.autocomplete.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\test.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
