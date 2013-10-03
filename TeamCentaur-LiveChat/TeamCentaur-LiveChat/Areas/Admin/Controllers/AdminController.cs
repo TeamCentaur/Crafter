@@ -33,11 +33,35 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetComments([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var tutorial = this.db.Tutorials.Include("Comments").FirstOrDefault(t => t.Id == id);
+            var comments = tutorial.Comments.AsQueryable().Select(CommentDisplayModel.FromComment);
+
+            return Json(comments.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetSteps([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var tutorial = this.db.Tutorials.Include("Steps").FirstOrDefault(t => t.Id == id);
+            var steps = tutorial.Steps.AsQueryable().Select(StepDisplayModel.FromStep);
+
+            return Json(steps.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
+        }
+
+        //public JsonResult DeleteSteps([DataSourceRequest] DataSourceRequest request, StepDisplayModel stepModel)
+        //{
+        //    var step = this.db.Steps.Include("Images").FirstOrDefault(st => st.Id == stepModel.Id);
+
+        //    if (step != null)
+        //    {
+
+        //    }
+        //}
 
         public JsonResult GetTutorials([DataSourceRequest] DataSourceRequest request)
         {
-            var tutorials = this.db.Tutorials.Include("Steps").Include("Comments").Include("Images").Select(TutorialDisplayModel.FromTutorial);
-
+            var tutorials = this.db.Tutorials.Select(TutorialDisplayModel.FromTutorial);            
             return Json(tutorials.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
 

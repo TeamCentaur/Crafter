@@ -8,15 +8,13 @@
         columns.Command(command =>
             {
                 command.Edit().Text("Edit Tutorial");
-                command.Destroy();
-                
-                command.Custom("Edit Comments");
-                command.Edit().Text("edit-comments");
-                //TODO: Edit comments button
-                //TODO: Edit steps button 
+                command.Destroy().Text("Delete Tutorial");
             });
     })
-    .ToolBar(tool => tool.Create())
+    .ToolBar(tool =>
+        {
+            tool.Create().Text("Create Tutorial");
+        })
     .Pageable()
     .Sortable(sort =>
         {
@@ -26,7 +24,6 @@
             {
                 edit.Mode(GridEditMode.PopUp);
                 edit.TemplateName("TutorialEdit");
-                //edit.Window(w => w);
             })
     .Groupable()
         .DataSource(data =>
@@ -39,12 +36,68 @@
                     .Update("UpdateTutorial", "Admin", new { area = "Admin" })
                     .Destroy("DeleteTutorial", "Admin", new { area = "Admin" })
                     .Create("CreateTutorial", "Admin", new { area = "Admin" });
-        })
+            })
+        .ClientDetailTemplateId("details")
 )
 
-<script type="text/javascript">
-    function test(e) {
-        console.log(e);
-        
-    }
+<script type="text/kendo-templ" id="details">
+    @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.StepDisplayModel>()
+    .Name("steps-grid-#=Id#")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Content);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Edit Step");
+            command.Destroy().Text("Delete Step");
+        });
+    })
+    .Pageable()
+    .Sortable(sort =>
+        {
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+        .Editable(edit =>
+            {
+                edit.Mode(GridEditMode.PopUp);
+            })
+        .DataSource(data =>
+            {
+                data.Ajax()
+                    .Model(m => m.Id(t => t.Id))
+                    .PageSize(10)
+                    .ServerOperation(true)
+                    .Read("GetSteps", "Admin", new { area = "Admin", id = "#=Id#" })
+                    .Update("UpdateStep", "Admin", new { area = "Admin" })
+                    .Destroy("DeleteStep", "Admin", new { area = "Admin" });
+            })
+    .ToClientTemplate()
+    )
+
+    @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.CommentDisplayModel>()
+    .Name("comments-grid-#=Id#")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Content);
+    })
+    .Pageable()
+    .Sortable(sort =>
+        {
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+        .Editable(edit =>
+            {
+                edit.Mode(GridEditMode.PopUp);
+            })
+    .Groupable()
+        .DataSource(data =>
+            {
+                data.Ajax()
+                    .Model(m => m.Id(t => t.Id))
+                    .PageSize(10)
+                    .ServerOperation(true)
+                    .Read("GetComments", "Admin", new { area = "Admin", id = "#=Id#" });
+            })
+    .ToClientTemplate()
+    )
 </script>

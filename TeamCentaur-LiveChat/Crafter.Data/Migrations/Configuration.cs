@@ -30,7 +30,7 @@ namespace Crafter.Data.Migrations
             //    );
             //
 
-            PopulateDb(context);
+            //PopulateDb(context);
         }
 
 

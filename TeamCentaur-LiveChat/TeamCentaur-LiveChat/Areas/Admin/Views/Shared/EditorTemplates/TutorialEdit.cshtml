@@ -80,33 +80,6 @@
                     .Value(Model.CategoryId.ToString())
                 )
             </div>
-
-            <div>
-                <p>Steps:</p>
-
-                @Model.Steps.Count
-
-                @*@if (Model.Steps != null)
-                {
-                    foreach (var step in Model.Steps)
-                    {
-                        @Html.Partial("StepsEdit", step);
-                    }
-                }*@
-
-                @*@foreach (var step in Model.Steps)
-                {
-                    <div class="control-group">
-                        @Html.Label("Step");
-                        @Html.LabelFor(model => model.Difficulty, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.Editor(step.Content);
-                        </div>
-                    </div>
-                }*@
-
-            </div>
-
         </div>
     </fieldset>
 }

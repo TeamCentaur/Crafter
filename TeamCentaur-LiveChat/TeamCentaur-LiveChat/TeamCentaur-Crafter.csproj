@@ -168,6 +168,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\ViewModels\CategoryDisplayModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\CommentDisplayModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ImageDisplayModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\StepDisplayModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\TutorialDisplayModel.cs" />
