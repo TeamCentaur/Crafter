@@ -187,6 +187,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\TutorialViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -302,7 +303,7 @@
     <Content Include="Views\Shared\_Search.cshtml" />
     <Content Include="Views\Users\All.cshtml" />
     <Content Include="Views\Account\_SetAvatar.cshtml" />
-    <Content Include="Views\Users\GetProfile.cshtml" />
+    <Content Include="Views\Users\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

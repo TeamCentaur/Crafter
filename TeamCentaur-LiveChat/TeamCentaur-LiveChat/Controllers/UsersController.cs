@@ -20,7 +20,9 @@ namespace TeamCentaur_LiveChat.Controllers
             return View();
         }
 
-        public ActionResult GetProfile(string userName)
+
+        [ActionName("profile")]
+        public ActionResult Profile(string userName)
         {
             var context = new CrafterContext();
 
@@ -31,7 +33,8 @@ namespace TeamCentaur_LiveChat.Controllers
 
             var user = context.Users.Include(u => u.Tutorials).FirstOrDefault(u => u.UserName == userName);
 
-            return this.View(user);
+            var userVm = new UserViewModel(user);
+            return this.View(userVm);
         }
 
         public ActionResult All()
