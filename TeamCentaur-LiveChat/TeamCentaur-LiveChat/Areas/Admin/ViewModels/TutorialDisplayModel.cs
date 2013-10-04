@@ -27,7 +27,8 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
                     User = tutorial.User.UserName,
                     Category = tutorial.Category.Name,
                     CategoryId = tutorial.Category.Id,
-                    Steps =tutorial.Steps.AsQueryable().Select(StepDisplayModel.FromStep).ToList()
+                    Steps =tutorial.Steps.AsQueryable().Select(StepDisplayModel.FromStep).ToList(),
+                    //Image = new ImageDisplayModel() { Id = tutorial.Image.Id, ImagePath = tutorial.Image.ImagePath}
                 };
             }
         }
@@ -43,6 +44,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Title must be between {2} and {1} symbols.")]
         public string Title { get; set; }
 
+        [ScaffoldColumn(false)]
         public int Likes { get; set; }
 
         public string EquipmentUsed { get; set; }
@@ -59,7 +61,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
 
         public string Category { get; set; }
 
-        public ICollection<ImageDisplayModel> Images { get; set; }
+        public string Image { get; set; }
 
         public ICollection<StepDisplayModel> Steps { get; set; }
     }

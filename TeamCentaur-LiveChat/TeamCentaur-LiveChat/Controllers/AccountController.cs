@@ -349,7 +349,7 @@ namespace TeamCentaur_LiveChat.Controllers
         {
             CrafterContext context = new CrafterContext();
             var user = context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            var avatar = user.ImageUrl;
+            var avatar = user != null ? user.ImageUrl : null;
             ViewBag.Avatar = avatar;
             return PartialView("_GetAvatar");
         }

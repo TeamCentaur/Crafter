@@ -13,7 +13,6 @@ namespace Crafter.Models
         {
             this.Steps = new HashSet<Step>();
             this.Comments = new HashSet<Comment>();
-            this.Images = new HashSet<Image>();
         }
 
         public int Id { get; set; }
@@ -44,6 +43,6 @@ namespace Crafter.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public virtual ICollection<Image> Images { get; set; }
+        public string Image { get; set; }
     }
 }

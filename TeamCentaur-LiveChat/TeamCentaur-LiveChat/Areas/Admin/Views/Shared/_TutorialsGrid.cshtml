@@ -45,13 +45,14 @@
     .Name("steps-grid-#=Id#")
     .Columns(columns =>
     {
-        columns.Bound(model => model.Content);
+        columns.Bound(model => model.Content).Title("Step Content");
         columns.Command(command =>
         {
             command.Edit().Text("Edit Step");
             command.Destroy().Text("Delete Step");
         });
     })
+    .ToolBar(t => t.Create().Text("Add Step"))
     .Pageable()
     .Sortable(sort =>
         {
@@ -69,7 +70,8 @@
                     .ServerOperation(true)
                     .Read("GetSteps", "Admin", new { area = "Admin", id = "#=Id#" })
                     .Update("UpdateStep", "Admin", new { area = "Admin" })
-                    .Destroy("DeleteStep", "Admin", new { area = "Admin" });
+                    .Destroy("DeleteStep", "Admin", new { area = "Admin" })
+                    .Create("CreateStep", "Admin", new { area = "Admin" });
             })
     .ToClientTemplate()
     )
@@ -78,7 +80,11 @@
     .Name("comments-grid-#=Id#")
     .Columns(columns =>
     {
-        columns.Bound(model => model.Content);
+        columns.Bound(model => model.Content).Title("Comment content");
+        columns.Command(command =>
+        {
+            command.Destroy().Text("Delete Comment");
+        });
     })
     .Pageable()
     .Sortable(sort =>
@@ -96,7 +102,8 @@
                     .Model(m => m.Id(t => t.Id))
                     .PageSize(10)
                     .ServerOperation(true)
-                    .Read("GetComments", "Admin", new { area = "Admin", id = "#=Id#" });
+                    .Read("GetComments", "Admin", new { area = "Admin", id = "#=Id#" })
+                    .Destroy("DeleteComment", "Admin", new { area = "Admin" });
             })
     .ToClientTemplate()
     )

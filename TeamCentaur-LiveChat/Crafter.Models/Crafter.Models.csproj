@@ -55,7 +55,6 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
-    <Compile Include="Image.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="Tutorial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

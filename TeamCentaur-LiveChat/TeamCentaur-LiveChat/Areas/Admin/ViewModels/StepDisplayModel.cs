@@ -18,17 +18,18 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
                 {
                     Content = step.Content,
                     Id = step.Id,
-                    Images = step.Images.AsQueryable().Select(ImageDisplayModel.FromImage).ToList()
+                    //Image =  new ImageDisplayModel() {ImagePath = step.Image.ImagePath, Id = step.Image.Id }
                 };
             }
         }
 
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         [Required]
         [StringLength(300, MinimumLength = 10, ErrorMessage = "Step should be between {2} and {1} symbols.")]
         public string Content { get; set; }
 
-        public ICollection<ImageDisplayModel> Images { get; set; }
+        public string Image { get; set; }
     }
 }

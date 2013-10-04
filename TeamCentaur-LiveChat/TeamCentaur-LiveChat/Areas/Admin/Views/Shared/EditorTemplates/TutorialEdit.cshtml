@@ -31,14 +31,6 @@
         </div>
 
         <div class="control-group">
-            @Html.LabelFor(model => model.Likes, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(model => model.Likes)
-                @Html.ValidationMessageFor(model => model.Likes, null, new { @class = "help-inline" })
-            </div>
-        </div>
-
-        <div class="control-group">
             @Html.LabelFor(model => model.EquipmentUsed, new { @class = "control-label" })
             <div class="controls">
                 @Html.EditorFor(model => model.EquipmentUsed)
@@ -81,5 +73,14 @@
                 )
             </div>
         </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Image, new { @class = "control-label" })
+            <div class="controls">
+                @(Html.Kendo().Upload().Name("attachments")
+                )
+            </div>
+        </div>
+
     </fieldset>
 }

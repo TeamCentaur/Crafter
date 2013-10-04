@@ -1,6 +1,7 @@
 ﻿using Crafter.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -21,6 +22,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
             }
         }
 
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         public string Name { get; set; }

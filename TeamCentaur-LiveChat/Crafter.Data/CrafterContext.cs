@@ -19,8 +19,6 @@ namespace Crafter.Data
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<Image> Images { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<ApplicationUser>()

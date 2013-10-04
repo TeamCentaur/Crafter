@@ -30,11 +30,8 @@ namespace Crafter.Data.Migrations
             //    );
             //
 
-            //PopulateDb(context);
+            PopulateDb(context);
         }
-
-
-
 
         private void PopulateDb(CrafterContext context)
         {
@@ -73,21 +70,11 @@ namespace Crafter.Data.Migrations
            
            for (int i = 0; i < 22; i++)
            {
-               var imageForTutorial = new Image()
-               {
-                   ImagePath = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/07/preview200-paperflowerbJPG.jpg"
-               };
-
-               var imageForStep = new Image()
-               {
-                   ImagePath = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/09/Totes-Awesome-Embroidery-Trim-Stabilizer1.jpg"
-               };
-
                var step = new Step()
                {
                    Content = "Step description " + i.ToString(),
                };
-               step.Images.Add(imageForStep);
+               step.Image = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/09/Totes-Awesome-Embroidery-Trim-Stabilizer1.jpg";
 
                var commentForTutorial = new Comment()
                {
@@ -107,17 +94,12 @@ namespace Crafter.Data.Migrations
                    EquipmentUsed = "no shit is used in these tutorials",
                    User = context.Users.FirstOrDefault(),
                };
-               newTutorial.Images.Add(imageForTutorial);
+               newTutorial.Image = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/07/preview200-paperflowerbJPG.jpg";
                newTutorial.Comments.Add(commentForTutorial);
                newTutorial.Steps.Add(step);
-               context.Tutorials.AddOrUpdate(newTutorial);
+               context.Tutorials.AddOrUpdate(t => t.Title, newTutorial);
            }
         }
-
-
-
-
-
 
         //private void PopulateDb(CrafterContext context)
         //{
