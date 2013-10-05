@@ -322,10 +322,7 @@
     <Content Include="Views\Users\All.cshtml" />
     <Content Include="Views\Account\_SetAvatar.cshtml" />
     <Content Include="Views\Users\Profile.cshtml" />
-    <Content Include="Views\Tutorials\Create.cshtml" />
-    <Content Include="Views\Tutorials\Delete.cshtml" />
     <Content Include="Views\Tutorials\Details.cshtml" />
-    <Content Include="Views\Tutorials\Edit.cshtml" />
     <Content Include="Views\Tutorials\Index.cshtml" />
     <Content Include="Views\Tutorials\MyTutorials.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TutorialEdit.cshtml" />

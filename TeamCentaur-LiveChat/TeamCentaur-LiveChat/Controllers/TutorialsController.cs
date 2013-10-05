@@ -68,12 +68,6 @@ namespace TeamCentaur_LiveChat.Controllers
             return View(tutorial);
         }
 
-        // GET: /Tutorials/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         public JsonResult CreateTutorial([DataSourceRequest] DataSourceRequest request, TutorialCreateModel tutorialModel)
         {
             var category = this.db.Categories.FirstOrDefault(c => c.Id == tutorialModel.CategoryId);
@@ -112,69 +106,88 @@ namespace TeamCentaur_LiveChat.Controllers
             return Json(new[] { result }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
         }
 
-        // GET: /Tutorials/Edit/5
-        public ActionResult Edit(int? id)
+        public JsonResult CreateStep([DataSourceRequest] DataSourceRequest request, int tutorialId, StepDisplayModel stepModel)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tutorial tutorial = db.Tutorials.Find(id);
-            if (tutorial == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tutorial);
-        }
 
-        // POST: /Tutorials/Edit/5
-		// To protect from over posting attacks, please enable the specific properties you want to bind to, for 
-		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		// 
-		// Example: public ActionResult Update([Bind(Include="ExampleProperty1,ExampleProperty2")] Model model)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tutorial tutorial)
-        {
-            if (ModelState.IsValid)
+            var tutorial = this.db.Tutorials.Find(tutorialId);
+            var user = this.db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+
+            if (user != tutorial.User)
             {
-                db.Entry(tutorial).State = EntityState.Modified;
+                ModelState.AddModelError("Permissions", "You don't have permissions");
+            }
+
+            if (tutorial != null && user != null && tutorial.User == user && ModelState.IsValid)
+            {
+                Step step = new Step();
+                step.Content = stepModel.Content;
+                step.Title = stepModel.Title;
+
+                string newImage = this.GetStepImage(tutorial.Title, step.Title);
+
+                if (newImage != null)
+                {
+                    step.Image = newImage;
+                }
+
+                tutorial.Steps.Add(step);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(tutorial);
+
+            return Json(new[] { stepModel }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
         }
 
-        // GET: /Tutorials/Delete/5
-        public ActionResult Delete(int? id)
+        public JsonResult GetSteps([DataSourceRequest] DataSourceRequest request, int id)
         {
-            if (id == null)
+            var tutorial = this.db.Tutorials.Include("Steps").FirstOrDefault(t => t.Id == id);
+            var steps = tutorial.Steps.AsQueryable().Select(StepDisplayModel.FromStep);
+
+            return Json(steps.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteStep([DataSourceRequest] DataSourceRequest request, int id, StepDisplayModel stepModel)
+        {
+            var step = this.db.Steps.Include("Tutorial").FirstOrDefault(st => st.Id == stepModel.Id);
+            var tutorial = step.Tutorial;
+            var user = tutorial.User;
+
+
+            if (user.UserName != HttpContext.User.Identity.Name)
             {
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ModelState.AddModelError("Permissions", "You don't have permissions");
+                return Json(new[] { stepModel }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
             }
-            Tutorial tutorial = db.Tutorials.Find(id);
-            if (tutorial == null)
+
+            if (step != null)
             {
-                return HttpNotFound();
+                this.db.Steps.Remove(step);
+                this.db.SaveChanges();
             }
-            return View(tutorial);
+
+            return Json(new[] { stepModel }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
         }
 
-        // POST: /Tutorials/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public JsonResult UpdateStep([DataSourceRequest] DataSourceRequest request, StepDisplayModel stepModel)
         {
-            Tutorial tutorial = db.Tutorials.Find(id);
-            db.Tutorials.Remove(tutorial);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var step = this.db.Steps.FirstOrDefault(st => st.Id == stepModel.Id);
 
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
+            if (step != null && ModelState.IsValid)
+            {
+                step.Title = stepModel.Title;
+                step.Content = stepModel.Content;
+                var tutorial = step.Tutorial;
+
+                string newImage = this.GetStepImage(tutorial.Title, step.Title);
+
+                if (newImage != null)
+                {
+                    step.Image = newImage;
+                }
+
+                this.db.SaveChanges();
+            }
+
+            return Json(new[] { stepModel }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -262,12 +275,18 @@ namespace TeamCentaur_LiveChat.Controllers
                 return null;
             }
 
-            var relativePath = "~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/" + tutorialTitle + "/Steps/" + StepTitle + "/";
+            string stepsPath = "~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/" + tutorialTitle + "/Steps/";
+            string relativePath = stepsPath  + StepTitle + "/";
             string destinationFolder = Server.MapPath(relativePath);
 
             if (Directory.Exists(destinationFolder))
             {
                 Directory.Delete(destinationFolder);
+            }
+
+            if (!Directory.Exists(stepsPath))
+            {
+                Directory.CreateDirectory(Server.MapPath(stepsPath));
             }
 
             Directory.Move(searchFolder, destinationFolder);

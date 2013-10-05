@@ -67,7 +67,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 
         public JsonResult DeleteStep([DataSourceRequest] DataSourceRequest request, StepDisplayModel stepModel)
         {
-            var step = this.db.Steps.Include("Images").FirstOrDefault(st => st.Id == stepModel.Id);
+            var step = this.db.Steps.FirstOrDefault(st => st.Id == stepModel.Id);
 
             if (step != null)
             {

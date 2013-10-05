@@ -10,7 +10,7 @@
     .Columns(columns =>
     {
         columns.Bound(model => model.Title).Width(250);
-        columns.Bound(model => model.Category).Width(250);
+        columns.Bound(model => model.Category).Width(150);
         columns.Command(command =>
             {
                 command.Edit().Text("Edit Tutorial");
@@ -43,6 +43,49 @@
                     .Destroy("DeleteTutorial", "Admin", new { area = "Admin" })
                     .Create("CreateTutorial", "Tutorials", new { area = "" });
             })
+            .ClientDetailTemplateId("details")
         )
     </div>
 </div>
+
+<script type="text/kendo-templ" id="details">
+
+    <h5>Steps</h5>
+    @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.StepDisplayModel>()
+    .Name("steps-grid-#=Id#")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Content).Title("Step Content");
+        columns.Bound(model => model.Title).Title("Step Title");
+        columns.Command(command =>
+        {
+            command.Edit().Text("Edit Step");
+            command.Destroy().Text("Delete Step");
+        });
+    })
+    .ToolBar(t => t.Create().Text("Add Step"))
+    .Pageable()
+    .Sortable(sort =>
+        {
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+        .Editable(edit =>
+            {
+                edit.Mode(GridEditMode.PopUp);
+                edit.TemplateName("StepEdit");
+            })
+        .DataSource(data =>
+            {
+                data.Ajax()
+                    .Model(m => m.Id(t => t.Id))
+                    .PageSize(10)
+                    .ServerOperation(true)
+                    .Read("GetSteps", "Tutorials", new { area = "", id = "#=Id#" })
+                    .Create("CreateStep", "Tutorials", new { area = "", tutorialId = "#=Id#" })
+                    .Update("UpdateStep", "Tutorials", new { area = "" })
+                    .Destroy("DeleteStep", "Tutorials", new { area = "", id = "#=Id#" });
+            })
+    .ToClientTemplate()
+    )
+
+</script>

@@ -41,6 +41,7 @@
 )
 
 <script type="text/kendo-templ" id="details">
+    <h5>Steps</h5>
     @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.StepDisplayModel>()
     .Name("steps-grid-#=Id#")
     .Columns(columns =>
@@ -53,7 +54,6 @@
             command.Destroy().Text("Delete Step");
         });
     })
-    .ToolBar(t => t.Create().Text("Add Step"))
     .Pageable()
     .Sortable(sort =>
         {
@@ -78,6 +78,7 @@
     .ToClientTemplate()
     )
 
+    <h5>Comments</h5>
     @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.CommentDisplayModel>()
     .Name("comments-grid-#=Id#")
     .Columns(columns =>
