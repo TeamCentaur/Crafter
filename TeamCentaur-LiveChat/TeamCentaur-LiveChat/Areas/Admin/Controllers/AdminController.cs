@@ -265,7 +265,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             }
 
             var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
-            var result = relativePath.Substring(1, relativePath.Length) + imageFileName;
+            var result = relativePath.Substring(1, relativePath.Length - 1) + imageFileName;
             return result;
         }
 
@@ -295,7 +295,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             }
 
             var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
-            var result = relativePath.Substring(1, relativePath.Length) + imageFileName;
+            var result = relativePath.Substring(1, relativePath.Length - 1) + imageFileName;
             return result;
         }
     }

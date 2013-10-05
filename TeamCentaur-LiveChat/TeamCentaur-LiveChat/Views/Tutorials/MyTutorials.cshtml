@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "MyTutorials";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="span10">
+        @(Html.Kendo().Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.TutorialDisplayModel>()
+    .Name("user-tutorial-grid")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Title).Width(250);
+        columns.Bound(model => model.Category).Width(250);
+        columns.Command(command =>
+            {
+                command.Edit().Text("Edit Tutorial");
+                command.Destroy().Text("Delete Tutorial");
+            }).Title("Commands").Width(200);
+    })
+    .ToolBar(tool =>
+        {
+            tool.Create().Text("Create Tutorial");
+        })
+    .Pageable()
+    .Sortable(sort =>
+        {
+            sort.SortMode(GridSortMode.SingleColumn);
+        })
+        .Editable(edit =>
+            {
+                edit.Mode(GridEditMode.PopUp);
+                edit.TemplateName("TutorialEdit");
+            })
+    .Groupable()
+        .DataSource(data =>
+            {
+                data.Ajax()
+                    .Model(m => m.Id(t => t.Id))
+                    .PageSize(10)
+                    .ServerOperation(true)
+                    .Read("GetMyTutorials", "Tutorials", new { area = "" })
+                    .Update("UpdateTutorial", "Admin", new { area = "Admin" })
+                    .Destroy("DeleteTutorial", "Admin", new { area = "Admin" })
+                    .Create("CreateTutorial", "Tutorials", new { area = "" });
+            })
+        )
+    </div>
+</div>

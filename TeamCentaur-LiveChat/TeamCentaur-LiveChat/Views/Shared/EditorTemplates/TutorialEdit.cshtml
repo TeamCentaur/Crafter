@@ -1,0 +1,103 @@
+﻿@model TeamCentaur_LiveChat.Areas.Admin.ViewModels.TutorialDisplayModel
+
+@{
+    ViewBag.Title = Model.Title != null ? "Edit Tutorial" : "Create Tutorial";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.EquipmentUsed, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.EquipmentUsed)
+                @Html.ValidationMessageFor(model => model.EquipmentUsed, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.CompletionTime, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.CompletionTime)
+                @Html.ValidationMessageFor(model => model.CompletionTime, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Difficulty, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Difficulty)
+                @Html.ValidationMessageFor(model => model.Difficulty, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Category, new { @class = "control-label" })
+            <div class="controls">
+                @(Html.Kendo().DropDownList()
+                .Name("CategoryId")
+                .Text("Category")
+                .DataSource(source =>
+                    {
+                        source.Read(read =>
+                            {
+                                read.Action("GetCategories", "Tutorials");
+                            });
+                        source.ServerFiltering(false);
+                    })
+                    .DataTextField("Name")
+                    .DataValueField("Id")
+                    .OptionLabel("Select Category")
+                    .Value(Model.CategoryId.ToString())
+                )
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Image, new { @class = "control-label" })
+            <div class="controls">
+                @(Html.Kendo().Upload()
+            .Name("files")
+            .Async(async =>
+                {
+                    async.AutoUpload(true);
+                    async.Save("SaveTutorialImage", "Tutorials");
+                })
+                )
+            </div>
+        </div>
+
+    </fieldset>
+}
+
+@* TODO: Pop-up window title needs to be fixed! *@
+@if (ViewBag.Title == "Create Tutorial")
+{
+    <script>
+        $(document).ready( function () {
+            $(".k-window-title").text("Create");
+        });
+    </script>
+}

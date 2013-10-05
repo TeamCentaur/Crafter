@@ -327,6 +327,9 @@
     <Content Include="Views\Tutorials\Details.cshtml" />
     <Content Include="Views\Tutorials\Edit.cshtml" />
     <Content Include="Views\Tutorials\Index.cshtml" />
+    <Content Include="Views\Tutorials\MyTutorials.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TutorialEdit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StepEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
