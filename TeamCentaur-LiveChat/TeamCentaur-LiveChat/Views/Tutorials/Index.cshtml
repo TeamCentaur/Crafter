@@ -19,7 +19,7 @@
         <div class="span4">
             @if (Model.ElementAt(i).Image != null)
             {
-                <img src="@item.Image" alt="@item.Category" />
+                <img src="@item.Image" class="img-polaroid" alt="@item.Category" />
             }
             <div><span>@Model.ElementAt(i).Title</span>
             @Html.ActionLink("Details", "Details", new { id = item.Id })

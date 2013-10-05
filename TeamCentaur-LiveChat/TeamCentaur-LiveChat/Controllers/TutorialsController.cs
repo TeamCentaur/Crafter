@@ -28,7 +28,7 @@ namespace TeamCentaur_LiveChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tutorial tutorial = db.Tutorials.Find(id);
+            Tutorial tutorial = db.Tutorials.Include("Steps").Include("Comments").FirstOrDefault(t => t.Id == id);
             if (tutorial == null)
             {
                 return HttpNotFound();

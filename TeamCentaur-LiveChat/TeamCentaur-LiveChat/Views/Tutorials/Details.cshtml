@@ -1,80 +1,43 @@
 ﻿@model Crafter.Models.Tutorial
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
 }
+<header class="hero-unit">
+    <h2>@ViewBag.Title</h2>
+    @if (Model.Image != null)
+    {
+        <img src="@Model.Image" class="img-rounded" />
+    }
+</header>
 
-<h2>Details</h2>
 
-<fieldset>
-    <legend>Tutorial</legend>
-    <dl>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+<div><strong>Steps:</strong></div>
+<div class="accordion" id="accordion2">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    @for (int i = 0; i < Model.Steps.Count(); i++)
+    {
+        var step = Model.Steps.ElementAt(i);
+        
+        <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
+                Step @i: @step.Title
+            </a>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+        <div id=@("collapse" + i) class="accordion-body collapse">
+            <div class="accordion-inner">
+                <img src="@step.Image" alt="no image" />
+                <div><strong>Description:</strong></div>
+                <div>@step.Content</div>                    
+            </div>
+        </div>
+    </div>        
+    }
+</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Likes)
-        </dt>
+<script type="text/javascript">
 
-        <dd>
-            @Html.DisplayFor(model => model.Likes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EquipmentUsed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EquipmentUsed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompletionTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompletionTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Difficulty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Difficulty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-    </dl>
-</fieldset>
-<p>
-    @Html.ActionLink("Back to Tutorials", "Index")
-</p>
+</script>
