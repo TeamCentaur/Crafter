@@ -22,10 +22,18 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "brand" })
                 <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { })</li>
-                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { })</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { })</li>
+                    <ul class="nav" id="menu">
+                        <li>@Html.ActionLink("Tutorials", "Index", "Home", new { area = "" }, new { })</li>
+                        <li>@Html.ActionLink("My Tutorials(not implemented)", "MyTutorials", "Tutorials", new { area = "" }, new { })</li>
+
+
+                        <li>
+                            Admin
+                            <ul>
+                                <li>@Html.ActionLink("Tutorials", "Index", "Admin", new { area = "Admin" }, new { })</li>
+                                <li>@Html.ActionLink("Users(not implemented)", "About", "Admin", new { area = "" }, new { })</li>
+                            </ul>
+                        </li>
                     </ul>
                     @*@Html.Action("Search", "Home")*@
                     @Html.Partial("_LoginPartial")
@@ -41,6 +49,9 @@
         </footer>
     </div>
 
+    <script type="text/javascript">
+        $("#menu").kendoMenu();
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

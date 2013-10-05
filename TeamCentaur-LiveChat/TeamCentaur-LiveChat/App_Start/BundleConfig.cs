@@ -35,7 +35,7 @@ namespace TeamCentaur_LiveChat
             // The Kendo CSS bundle
             bundles.Add(new StyleBundle("~/Content/kendo").Include(
                     "~/Content/Kendo/kendo.common.min.css",
-                    "~/Content/Kendo/kendo.default.min.css"));
+                    "~/Content/Kendo/kendo.black.min.css"));
              
             // Clear all items from the ignore list to allow minified CSS and JavaScript files in debug mode
             bundles.IgnoreList.Clear();

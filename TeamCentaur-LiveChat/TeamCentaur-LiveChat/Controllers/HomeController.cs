@@ -14,31 +14,7 @@ namespace TeamCentaurLiveChat.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Tutorials");
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Search()
-        {
-            var context = new CrafterContext();
-
-            var users = context.Users.Select(TeamCentaur_LiveChat.ViewModels.SimpleUserViewModel.FromUser);
-            return PartialView("_Search", users);
-        }
-
-        
     }
 }
