@@ -265,7 +265,8 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             }
 
             var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
-            return relativePath + imageFileName;
+            var result = relativePath.Substring(1, relativePath.Length) + imageFileName;
+            return result;
         }
 
         private string GetStepImage(string tutorialTitle, string StepTitle)
@@ -294,7 +295,8 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             }
 
             var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
-            return relativePath + imageFileName;
+            var result = relativePath.Substring(1, relativePath.Length) + imageFileName;
+            return result;
         }
     }
 }
