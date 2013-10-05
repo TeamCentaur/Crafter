@@ -24,6 +24,6 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<HttpPostedFileBase> attachments { get; set; }
+        public HttpPostedFileBase Image { get; set; }
     }
 }

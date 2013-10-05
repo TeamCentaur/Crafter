@@ -35,6 +35,8 @@ namespace Crafter.Data.Migrations
 
         private void PopulateDb(CrafterContext context)
         {
+            var user = context.Users.FirstOrDefault();
+
            var categories = new List<Category>();
 
            categories.Add(new Category(){ Name = "Babies and Kids" });
@@ -75,6 +77,7 @@ namespace Crafter.Data.Migrations
                    Content = "Step description " + i.ToString(),
                };
                step.Image = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/09/Totes-Awesome-Embroidery-Trim-Stabilizer1.jpg";
+               step.Title = "Step Title " + i.ToString();
 
                var commentForTutorial = new Comment()
                {
@@ -97,6 +100,7 @@ namespace Crafter.Data.Migrations
                newTutorial.Image = "http://cdn.tutsplus.com/craft.tutsplus.com/uploads/2013/07/preview200-paperflowerbJPG.jpg";
                newTutorial.Comments.Add(commentForTutorial);
                newTutorial.Steps.Add(step);
+               newTutorial.User = user;
                context.Tutorials.AddOrUpdate(t => t.Title, newTutorial);
            }
         }

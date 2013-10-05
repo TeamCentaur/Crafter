@@ -9,6 +9,7 @@ using Kendo.Mvc.UI;
 using TeamCentaur_LiveChat.Areas.Admin.ViewModels;
 using Crafter.Models;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 {
@@ -83,15 +84,16 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 
             if (step != null && ModelState.IsValid)
             {
+                step.Title = stepModel.Title;
                 step.Content = stepModel.Content;
-                //step.Images.Clear();
+                var tutorial = step.Tutorial;
 
-                //HashSet<Image> images = this.AddOrUpdateImages(stepModel.Images);
+                string newImage = this.GetStepImage(tutorial.Title, step.Title);
 
-                //foreach (var image in images)
-                //{
-                //    step.Images.Add(image);
-                //}
+                if (newImage != null)
+                {
+                    step.Image = newImage;
+                }
 
                 this.db.SaveChanges();
             }
@@ -101,54 +103,19 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 
         public JsonResult GetTutorials([DataSourceRequest] DataSourceRequest request)
         {
-            var tutorials = this.db.Tutorials.Select(TutorialDisplayModel.FromTutorial);    
-        
+            var tutorials = this.db.Tutorials.Select(TutorialDisplayModel.FromTutorial);
+
             return Json(tutorials.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
-
-        private IEnumerable<string> GetFileInfo(IEnumerable<HttpPostedFileBase> files)
-        {
-            return
-                from a in files
-                where a != null
-                select string.Format("{0} ({1} bytes)", Path.GetFileName(a.FileName), a.ContentLength);
-        }
-
-        public ActionResult Save(IEnumerable<HttpPostedFileBase> attachments)
-        {
-            System.Diagnostics.Trace.WriteLine("SavinG FiLe HeRe");
-            // The Name of the Upload component is "attachments"
-            string imageLocation = string.Empty;
-            foreach (var file in attachments)
-            {
-                // Some browsers send file names with full path. We only care about the file name.
-                var fileName = Path.GetFileName(file.FileName);
-                var destinationPath = Path.Combine(Server.MapPath("~/Uploaded_Files"), fileName);
-                imageLocation = "/Uploaded_Files/" + fileName;
-                file.SaveAs(destinationPath);
-            }
-
-            var context = new CrafterContext();
-            var user = context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            user.ImageUrl = imageLocation;
-            context.SaveChanges();
-
-            // Return an empty string to signify success
-            return Content("");
-        }
-
-
 
         public JsonResult CreateTutorial([DataSourceRequest] DataSourceRequest request, TutorialCreateModel tutorialModel)
         {
             var category = this.db.Categories.FirstOrDefault(c => c.Id == tutorialModel.CategoryId);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
 
-            //var files = tutorialModel.Image != null ? GetFileInfo(tutorialModel.Image) : null;
-
             TutorialDisplayModel result = new TutorialDisplayModel();
 
-            if (tutorialModel != null)//&&user != null)
+            if (tutorialModel != null &&user != null)
             {
                 Tutorial newTutorial = new Tutorial();
                 newTutorial.Category = category;
@@ -159,18 +126,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
                 newTutorial.Title = tutorialModel.Title;
                 newTutorial.User = user;
                 newTutorial.CreatedOn = DateTime.Now;
-
-                //string imageLocation = string.Empty;
-                //foreach (var file in tutorialModel.attachments)
-                //{
-                //    // Some browsers send file names with full path. We only care about the file name.
-                //    var fileName = Path.GetFileName(file.FileName);
-                //    var destinationPath = Path.Combine(Server.MapPath("~/Uploaded_Files/"), fileName);
-                //    imageLocation = "/Uploaded_Files/" + fileName;
-                //    file.SaveAs(destinationPath);
-                //}
-
-                //newTutorial.Image = imageLocation;
+                newTutorial.Image = this.GetTutorialImage(newTutorial.Title);
 
                 this.db.Tutorials.Add(newTutorial);
                 this.db.SaveChanges();
@@ -219,7 +175,16 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
                 tutorial.EquipmentUsed = model.EquipmentUsed;
                 tutorial.Likes = model.Likes;
                 tutorial.Title = model.Title;
+
+                var newImage = this.GetTutorialImage(tutorial.Title);
+
+                if (newImage != null)
+                {
+                    tutorial.Image = newImage;
+                }
+
                 tutorial.Category = category;
+
                 this.db.SaveChanges();
 
                 model.Category = category.Name;
@@ -228,5 +193,108 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 
             return Json(new[] { model }.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
         }
-	}
+
+        public ActionResult SaveTutorialImage(IEnumerable<HttpPostedFileBase> files)
+        {
+            string imageLocation = string.Empty;
+
+            foreach (var file in files)
+            {
+                string destinationFolder = Server.MapPath("~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/Temp/");
+                string extension = Path.GetExtension(file.FileName);
+
+                if (!Directory.Exists(destinationFolder))
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
+
+                var destinationPath = destinationFolder + "tutorial-image" + extension;
+
+                file.SaveAs(destinationPath);
+            }
+
+            return Content("");
+        }
+
+        public ActionResult SaveStepImage(IEnumerable<HttpPostedFileBase> files)
+        {
+            string imageLocation = string.Empty;
+
+            foreach (var file in files)
+            {
+                string destinationFolder = Server.MapPath("~/Uploaded_Files/Users/" + User.Identity.Name + "/Steps/Temp/");
+                string extension = Path.GetExtension(file.FileName);
+
+                if (!Directory.Exists(destinationFolder))
+                {
+                    Directory.CreateDirectory(destinationFolder);
+                }
+
+                var destinationPath = destinationFolder + "step-image" + extension;
+
+                file.SaveAs(destinationPath);
+            }
+
+            return Content("");
+        }
+
+        private string GetTutorialImage(string tutorialTitle)
+        {
+            string searchFolder = Server.MapPath("~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/Temp/");
+
+            if (!Directory.Exists(searchFolder))
+            {
+                return null;
+            }
+
+            var relativePath = "~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/" + tutorialTitle + "/";
+
+            string destinationFolder = Server.MapPath(relativePath);
+
+            if (Directory.Exists(destinationFolder))
+            {
+                Directory.Delete(destinationFolder);
+            }
+
+            Directory.Move(searchFolder, destinationFolder);
+            var file = Directory.GetFiles(destinationFolder).FirstOrDefault();
+
+            if (file == null)
+            {
+                return null;
+            }
+
+            var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
+            return relativePath + imageFileName;
+        }
+
+        private string GetStepImage(string tutorialTitle, string StepTitle)
+        {
+            string searchFolder = Server.MapPath("~/Uploaded_Files/Users/" + User.Identity.Name + "/Steps/Temp/");
+
+            if (!Directory.Exists(searchFolder))
+            {
+                return null;
+            }
+
+            var relativePath = "~/Uploaded_Files/Users/" + User.Identity.Name + "/Tutorials/" + tutorialTitle + "/Steps/" + StepTitle + "/";
+            string destinationFolder = Server.MapPath(relativePath);
+
+            if (Directory.Exists(destinationFolder))
+            {
+                Directory.Delete(destinationFolder);
+            }
+
+            Directory.Move(searchFolder, destinationFolder);
+            var file = Directory.GetFiles(destinationFolder).FirstOrDefault();
+
+            if (file == null)
+            {
+                return null;
+            }
+
+            var imageFileName = Regex.Match(file, @"[^\\]+$").Value;
+            return relativePath + imageFileName;
+        }
+    }
 }

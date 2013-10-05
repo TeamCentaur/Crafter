@@ -21,31 +21,6 @@ namespace Crafter.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<ApplicationUser>()
-            //    .HasOptional(a => a.Tutorials)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Tutorial>()
-            //    .HasOptional(t => t.Comments)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Tutorial>()
-            //    .HasOptional(t => t.Images)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Tutorial>()
-            //    .HasOptional(t => t.Steps)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Step>()
-            //    .HasOptional(s => s.Images)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
-
             base.OnModelCreating(modelBuilder);
         }
     }

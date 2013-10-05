@@ -18,7 +18,8 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
                 {
                     Content = step.Content,
                     Id = step.Id,
-                    //Image =  new ImageDisplayModel() {ImagePath = step.Image.ImagePath, Id = step.Image.Id }
+                    Image = step.Image,
+                    Title = step.Title
                 };
             }
         }
@@ -27,7 +28,11 @@ namespace TeamCentaur_LiveChat.Areas.Admin.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(300, MinimumLength = 10, ErrorMessage = "Step should be between {2} and {1} symbols.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Step title should be between {2} and {1} symbols.")]
+        public string Title { get; set; }
+
+        [Required]
+        [StringLength(300, MinimumLength = 10, ErrorMessage = "Step content should be between {2} and {1} symbols.")]
         public string Content { get; set; }
 
         public string Image { get; set; }
