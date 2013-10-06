@@ -13,6 +13,7 @@ using Kendo.Mvc.Extensions;
 using TeamCentaur_LiveChat.Areas.Admin.ViewModels;
 using System.IO;
 using System.Text.RegularExpressions;
+using TeamCentaur_LiveChat.ViewModels;
 
 namespace TeamCentaur_LiveChat.Controllers
 {
@@ -66,6 +67,27 @@ namespace TeamCentaur_LiveChat.Controllers
                 return HttpNotFound();
             }
             return View(tutorial);
+        }
+
+        public ActionResult AddComment(int tutorialId, CommentCreateModel commentModel)
+        {
+            var tutorial = this.db.Tutorials.Find(tutorialId);
+
+            var user = this.db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+
+            if (tutorial == null || !ModelState.IsValid || user == null)
+            {
+                return Content("");
+            }
+
+            Comment newComment = new Comment();
+            newComment.Content = commentModel.Content;
+            newComment.User = user;
+            newComment.CreatedOn = DateTime.Now;
+            tutorial.Comments.Add(newComment);
+            this.db.SaveChanges();
+
+            return View("_AddComment", newComment);
         }
 
         public JsonResult CreateTutorial([DataSourceRequest] DataSourceRequest request, TutorialCreateModel tutorialModel)

@@ -9,7 +9,12 @@ namespace TeamCentaur_LiveChat
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/Kendo/jquery.min.js"));
+                        "~/Scripts/Kendo/jquery.min.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery-unobtrusive").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -31,15 +36,15 @@ namespace TeamCentaur_LiveChat
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                     "~/Scripts/Kendo/kendo.all.min.js", // or kendo.all.min.js if you want to use Kendo UI Web and Kendo UI DataViz
                     "~/Scripts/Kendo/kendo.aspnetmvc.min.js"));
-             
+
             // The Kendo CSS bundle
             bundles.Add(new StyleBundle("~/Content/kendo").Include(
                     "~/Content/Kendo/kendo.common.min.css",
                     "~/Content/Kendo/kendo.black.min.css"));
-             
+
             // Clear all items from the ignore list to allow minified CSS and JavaScript files in debug mode
             bundles.IgnoreList.Clear();
-             
+
             // Add back the default ignore list rules sans the ones which affect minified files and debug mode
             bundles.IgnoreList.Ignore("*.intellisense.js");
             bundles.IgnoreList.Ignore("*-vsdoc.js");

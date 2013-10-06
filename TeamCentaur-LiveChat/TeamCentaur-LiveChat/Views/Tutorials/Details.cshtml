@@ -3,12 +3,24 @@
 @{
     ViewBag.Title = Model.Title;
 }
-<header class="hero-unit">
-    <h2>@ViewBag.Title</h2>
-    @if (Model.Image != null)
-    {
-        <img src="@Model.Image" class="img-rounded" />
-    }
+<header class="hero-unit clearfix">
+    <div class="pull-left">
+        <h2>@ViewBag.Title</h2>
+        @if (Model.Image != null)
+        {
+            <img src="@Model.Image" class="img-rounded" />
+        }
+    </div>
+    <div class="pull-right">
+        <div>
+            <div><strong>Category:</strong><span>@Model.Category.Name</span></div>
+            <div><strong>Difficulty:</strong><span>@Model.Difficulty</span></div>
+            <div><strong>Completion Time:</strong><span>@Model.CompletionTime</span></div>
+            <div><strong>Eqipment Used:</strong><span>@Model.EquipmentUsed</span></div>
+            <div><strong>Upload date:</strong><span>@Model.CreatedOn.ToString("yyyy-MMM-dd")</span></div>
+            <div><strong>Uploaded by:</strong><span>@Model.User.UserName</span></div>
+        </div>
+    </div>
 </header>
 
 
@@ -27,7 +39,7 @@
             </a>
         </div>
 
-        <div id=@("collapse" + i) class="accordion-body collapse">
+        <div id=@("collapse" + i) class="accordion-body collapse in">
             <div class="accordion-inner">
                 <img src="@step.Image" alt="no image" />
                 <div><strong>Description:</strong></div>
@@ -35,6 +47,31 @@
             </div>
         </div>
     </div>        
+    }
+</div>
+
+<div><strong>Comments:</strong></div>
+
+<div id="comments">
+    @for (int i = 0; i < Model.Comments.Count; i++)
+    {
+        var comment = Model.Comments.ElementAt(i);
+        
+        <div><strong>@comment.User.UserName:</strong><span>@comment.Content</span><div>@comment.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</div></div>
+    }
+
+
+</div>
+
+<div>
+    @using (Ajax.BeginForm("AddComment", new {tutorialId = @Model.Id } , new AjaxOptions
+    {
+        InsertionMode = InsertionMode.InsertAfter,
+        UpdateTargetId = "comments"
+    }))
+    {
+        <input type="text"  name="Content"/>
+        <input type="submit" value="Comment" />
     }
 </div>
 

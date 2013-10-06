@@ -188,6 +188,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CommentCreateModel.cs" />
     <Compile Include="ViewModels\TutorialViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -272,6 +273,7 @@
     <Content Include="Areas\Admin\Views\Shared\_TutorialsGrid.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TutorialEdit.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\StepEdit.cshtml" />
+    <Content Include="Views\Shared\_AddComment.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
