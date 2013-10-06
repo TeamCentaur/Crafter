@@ -6,26 +6,56 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div class="row">
-
-    @for (int i = 0; i < Model.Count(); i++)
-    {
-        var item = Model.ElementAt(i);
-        <div class="span4">
-            @if (Model.ElementAt(i).Image != null)
-            {
-                <img src="@item.Image" style="max-width:200px; max-height:200px" class="img-polaroid" alt="@item.Category" />
-            }
-            <div><span>@Model.ElementAt(i).Title</span>
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
-            </div>
-        </div>
-        
-        if (i > 0 && (i + 1) % 3 == 0)
+<div>
+    @using (Ajax.BeginForm("Search", "Tutorials", new AjaxOptions
         {
-            @:</div>
-            @:<div class="row">
+            UpdateTargetId = "tutorials",
+            InsertionMode = InsertionMode.Replace
+        }))
+    {
+        @(Html.Kendo()
+    .AutoComplete()
+    .Name("tutorialSearch")
+    .DataTextField("Title")
+    .MinLength(3)
+    .Placeholder("Enter tutorial")
+    .DataSource(source =>
+        {
+            source.Read(read =>
+                {
+                    read.Action("GetTutorials", "Tutorials");
+                    read.Data("tutorialSearch");
+                })
+                .ServerFiltering(true);
+        }
+    ))
+
+
+        @(Html.Kendo()
+        .DropDownList()
+        .Name("categoryId")
+        .DataTextField("Name")
+        .DataValueField("Id")
+        .OptionLabel("All")
+        .DataSource(data =>
+        {
+            data.Read(read => read.Action("GetCategories", "Tutorials"));
+            data.ServerFiltering(true);
+        }))
+
+        <input type="submit" value="Search" class="k-button" />
+    }
+</div>
+
+<div id="tutorials" class="row">
+
+    @Html.Partial("_TutorialsList", Model);
+</div>
+
+<script type="text/javascript">
+    function tutorialSearch() {
+        return {
+            title: $("#tutorialSearch").val()
         }
     }
-
-</div>
+</script>

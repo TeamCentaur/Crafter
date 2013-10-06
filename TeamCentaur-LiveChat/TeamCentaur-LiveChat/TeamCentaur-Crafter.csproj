@@ -273,6 +273,7 @@
     <Content Include="Areas\Admin\Views\Shared\_TutorialsGrid.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TutorialEdit.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\StepEdit.cshtml" />
+    <Content Include="Scripts\kendoMenu.js" />
     <Content Include="Views\Shared\_AddComment.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -329,6 +330,7 @@
     <Content Include="Views\Tutorials\MyTutorials.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TutorialEdit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\StepEdit.cshtml" />
+    <Content Include="Views\Shared\_TutorialsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

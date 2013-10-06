@@ -1,0 +1,5 @@
+﻿(function () {
+
+    $("#menu").kendoMenu();
+
+})();

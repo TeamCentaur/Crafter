@@ -67,14 +67,19 @@
     @using (Ajax.BeginForm("AddComment", new {tutorialId = @Model.Id } , new AjaxOptions
     {
         InsertionMode = InsertionMode.InsertAfter,
-        UpdateTargetId = "comments"
+        UpdateTargetId = "comments",
+        OnComplete = "clearInput"
     }))
     {
-        <input type="text"  name="Content"/>
-        <input type="submit" value="Comment" />
+        <input type="text" id="comment-input" name="Content"/>
+        <input type="submit" value="Comment" class="k-button" />
     }
 </div>
 
 <script type="text/javascript">
+    function clearInput() {
+        $("#comment-input").val("");
 
+        $("#menu").kendoMenu();
+    }
 </script>

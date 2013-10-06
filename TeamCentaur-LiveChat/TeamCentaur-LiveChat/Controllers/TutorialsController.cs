@@ -27,6 +27,12 @@ namespace TeamCentaur_LiveChat.Controllers
             return View(db.Tutorials.ToList());
         }
 
+        public JsonResult GetTutorials([DataSourceRequest] DataSourceRequest request, string title)
+        {
+            var result = this.db.Tutorials.Where(t => t.Title.ToLower().Contains(title.ToLower())).Select(TutorialDisplayModel.FromTutorial).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult MyTutorials()
         {
             return View();
@@ -45,6 +51,22 @@ namespace TeamCentaur_LiveChat.Controllers
             var tutorials = this.db.Tutorials.Include("Steps").Where(t => t.User.UserName == user.UserName).Select(TutorialDisplayModel.FromTutorial);
 
             return Json(tutorials.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Search(string tutorialSearch, int? categoryId)
+        {
+            var result = this.db.Tutorials.AsQueryable();
+
+            if (tutorialSearch != null)
+            {
+                result = result.Where(t => t.Title.ToLower().Contains(tutorialSearch.ToLower()));
+            }
+            if (categoryId != null)
+            {
+                result = result.Where(t => t.Category.Id == categoryId);
+            }
+
+            return PartialView("_TutorialsList", result);
         }
 
         public JsonResult GetCategories([DataSourceRequest] DataSourceRequest request)
