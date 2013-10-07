@@ -23,7 +23,7 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
         }
         //
         // GET: /Admin/Admin/
-        //[Authorize(Roles="Administrator")]
+        [Authorize(Roles="Administrator")]
         public ActionResult Index()
         {
             return View();
@@ -34,6 +34,31 @@ namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
             var categories = this.db.Categories.Select(CategoryDisplayModel.FromCategory).ToList();
 
             return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MakeAdmin(string userId)
+        {
+
+            return Content("");
+        }
+
+        public ActionResult Users()
+        {
+            return View();
+        }
+
+        public JsonResult GetUsers([DataSourceRequest] DataSourceRequest request)
+        {
+            var users = this.db.Users.Select(usr =>
+                new ApplicationUserViewModel 
+                {
+                    Age = usr.Age,
+                    City = usr.City,
+                    Id = usr.Id,
+                    UserName = usr.UserName
+                });
+
+            return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetComments([DataSourceRequest] DataSourceRequest request, int id)

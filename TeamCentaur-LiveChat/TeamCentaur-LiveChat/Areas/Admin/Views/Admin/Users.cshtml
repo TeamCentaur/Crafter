@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo()
+    .Grid<TeamCentaur_LiveChat.Areas.Admin.ViewModels.ApplicationUserViewModel>()
+.Name("users-grid")
+.Pageable()
+.Sortable()
+.Columns(columns =>
+    {
+        columns.Bound(m => m.UserName);
+        columns.Bound(m => m.Age);
+        columns.Bound(m => m.City);
+        columns.Bound(m => m.Email);
+        columns.Command(commands =>
+        {
+            commands.Edit().Text("Edit User");
+            commands.Destroy().Text("Delete User");
+        });
+
+        columns.Template(x => { }).Title("Admin Rights").ClientTemplate(
+                "<a class='k-button' href='" +
+                    Url.Action("MakeAdmin", "Admin") +
+                    "?userId=#= Id #'" +
+                ">Make Admin</a>" + 
+                "<a class='k-button' href='" +
+                    Url.Action("RemoveAdmin", "Admin") +
+                    "?userId=#= Id #'" +
+                ">Remove Admin</a>"
+            );
+    })
+.Filterable()
+.Editable(edit =>
+    {
+        edit.Mode(GridEditMode.InLine);
+    })
+.DataSource(source =>
+    {
+        source.Ajax()
+            .Model(m => m.Id(u => u.Id))
+            .PageSize(10)
+            .Read("GetUsers", "Admin")
+            .Update("UpdateUser", "Admin")
+            .Destroy("DeleteUser", "Admin")
+            .ServerOperation(true);
+    })
+)

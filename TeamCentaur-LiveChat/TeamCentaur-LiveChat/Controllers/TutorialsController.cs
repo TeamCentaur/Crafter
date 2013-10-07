@@ -57,10 +57,11 @@ namespace TeamCentaur_LiveChat.Controllers
         {
             var result = this.db.Tutorials.AsQueryable();
 
-            if (tutorialSearch != null)
+            if (tutorialSearch != null && tutorialSearch != string.Empty)
             {
                 result = result.Where(t => t.Title.ToLower().Contains(tutorialSearch.ToLower()));
             }
+
             if (categoryId != null)
             {
                 result = result.Where(t => t.Category.Id == categoryId);
@@ -97,9 +98,19 @@ namespace TeamCentaur_LiveChat.Controllers
 
             var user = this.db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
 
-            if (tutorial == null || !ModelState.IsValid || user == null)
+            if (tutorial == null)
             {
-                return Content("");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid tutorial.");
+            }
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid user.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid comment. Comment should be between 2 and 500 symbols.");
             }
 
             Comment newComment = new Comment();

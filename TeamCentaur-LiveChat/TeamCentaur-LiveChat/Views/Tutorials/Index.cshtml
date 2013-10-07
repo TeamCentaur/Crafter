@@ -3,6 +3,95 @@
 @{
     ViewBag.Title = "Crafter Tutorials";
 }
+<div class="row-fluid">
+    <div id="tutorials" class="span8">
+        @Html.Partial("_TutorialsList", Model);
+    </div>
+
+    <div class="span4 home-search">
+        @using (Ajax.BeginForm("Search", "Tutorials", new AjaxOptions
+        {
+            UpdateTargetId = "tutorials",
+            InsertionMode = InsertionMode.Replace,
+            OnBegin = "beginFade",
+            OnComplete = "endFade"
+        }))
+        {
+            <fieldset class="form-horizontal">
+                <legend>Search for tutorials</legend>
+                <div class="control-group">
+                    @Html.Label("Name: ", new { @class = "control-label" })
+                    <div class="controls">
+                        @(Html.Kendo()
+                    .AutoComplete()
+                    .Name("tutorialSearch")
+                    .DataTextField("Title")
+                    .MinLength(3)
+                    .Placeholder("Enter tutorial name")
+                    .DataSource(source =>
+                        {
+                            source.Read(read =>
+                                {
+                                    read.Action("GetTutorials", "Tutorials");
+                                    read.Data("tutorialSearch");
+                                })
+                                .ServerFiltering(true);
+                        }
+                    ))
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.Label("Category: ", new { @class = "control-label" })
+                    <div class="controls">
+                        @(Html.Kendo()
+                    .DropDownList()
+                    .Name("categoryId")
+                    .DataTextField("Name")
+                    .DataValueField("Id")
+                    .OptionLabel("All")
+                    .DataSource(data =>
+                    {
+                        data.Read(read => read.Action("GetCategories", "Tutorials"));
+                        data.ServerFiltering(true);
+                    }))
+                    </div>
+                </div>
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Search" class="k-button pull-right" />
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function tutorialSearch() {
+        return {
+            title: $("#tutorialSearch").val()
+        }
+    }
+
+    function beginFade() {
+        $("#tutorials").hide();
+    }
+
+    function endFade() {
+        $("#tutorials").fadeIn(1000);
+    }
+</script>
+
+
+
+
+
+
+
+@*@model IEnumerable<Crafter.Models.Tutorial>
+
+@{
+    ViewBag.Title = "Crafter Tutorials";
+}
 
 <h2>@ViewBag.Title</h2>
 
@@ -10,7 +99,9 @@
     @using (Ajax.BeginForm("Search", "Tutorials", new AjaxOptions
         {
             UpdateTargetId = "tutorials",
-            InsertionMode = InsertionMode.Replace
+            InsertionMode = InsertionMode.Replace,
+            OnBegin = "beginFade",
+            OnComplete = "endFade"
         }))
     {
         @(Html.Kendo()
@@ -29,7 +120,6 @@
                 .ServerFiltering(true);
         }
     ))
-
 
         @(Html.Kendo()
         .DropDownList()
@@ -58,4 +148,12 @@
             title: $("#tutorialSearch").val()
         }
     }
-</script>
+
+    function beginFade() {
+        $("#tutorials").fadeOut(70);
+    }
+
+    function endFade() {
+        $("#tutorials").fadeIn();
+    }
+</script>*@

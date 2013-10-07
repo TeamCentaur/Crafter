@@ -25,36 +25,34 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav" id="menu">
                         <li>@Html.ActionLink("Tutorials", "Index", "Home", new { area = "" }, new { })</li>
-                        <li>@Html.ActionLink("My Tutorials", "MyTutorials", "Tutorials", new { area = "" }, new { })</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("My Tutorials", "MyTutorials", "Tutorials", new { area = "" }, new { })</li>
+                        }
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
-
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Tutorials", "Index", "Admin", new { area = "Admin" }, new { })</li>
-                                <li>@Html.ActionLink("Users(not implemented)", "About", "Admin", new { area = "" }, new { })</li>
-                                <li>@Html.ActionLink("Categories(not implemented)", "About", "Admin", new { area = "" }, new { })</li>
-
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Tutorials", "Index", "Admin", new { area = "Admin" }, new { })</li>
+                                    <li>@Html.ActionLink("Users(not implemented)", "Users", "Admin", new { area = "Admin" }, new { })</li>
+                                    <li>@Html.ActionLink("Categories(not implemented)", "Categories", "Admin", new { area = "Admin" }, new { })</li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-                    @*@Html.Action("Search", "Home")*@
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
-        @RenderBody()
-        @*<hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
+        <div id="wrapper">
+            @RenderBody()
+            </div>
     </div>
 
-    @*<script type="text/javascript">
-        $("#menu").kendoMenu();
-    </script>*@
-        @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿body {
+    background-color: #F2F2F2;
     padding-top: 60px;
     padding-bottom: 40px;
 }
@@ -55,3 +56,64 @@ input[type="checkbox"].input-validation-error {
     font-size: 18px;
     text-decoration: none;
 }
+
+
+
+
+
+.tutorials-wrapper {
+    padding: 10px 30px 30px 30px;
+    background-color: #fefefe;
+    border: 1px solid #DDDDDD;
+}
+
+.tutorial-home {
+    padding: 20px 0 20px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+    .tutorial-home img {
+        display: inline;
+    }
+
+.tutorial-home-description {
+    margin-left: 20px;
+}
+
+    .tutorial-home-description h3 {
+        margin-top: 0;
+    }
+
+    .tutorial-home-description a {
+        color: #347db5;
+    }
+
+.home-tutorial-category {
+    color: #4C98D3;
+}
+
+.tutorial-author-and-date {
+    font-size: small;
+}
+
+.tutorial-description {
+    width: 400px;
+}
+
+.home-search {
+    background-color: #fefefe;
+    border: 1px solid #DDDDDD;
+}
+
+    .home-search .form-horizontal legend {
+        padding: 0 0 20px 30px;
+    }
+
+    .home-search .form-horizontal .control-group label {
+        margin-left: 50px;
+        width: 30px;
+    }
+
+    .home-search .form-horizontal .control-group .controls {
+        margin-left: 130px;
+    }

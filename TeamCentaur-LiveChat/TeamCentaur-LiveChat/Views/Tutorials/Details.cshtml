@@ -31,22 +31,22 @@
     @for (int i = 0; i < Model.Steps.Count(); i++)
     {
         var step = Model.Steps.ElementAt(i);
-        
-        <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
-                Step @i: @step.Title
-            </a>
-        </div>
 
-        <div id=@("collapse" + i) class="accordion-body collapse in">
-            <div class="accordion-inner">
-                <img src="@step.Image" alt="no image" />
-                <div><strong>Description:</strong></div>
-                <div>@step.Content</div>                    
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
+                    Step @i: @step.Title
+                </a>
+            </div>
+
+            <div id=@("collapse" + i) class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    <img src="@step.Image" alt="no image" />
+                    <div><strong>Description:</strong></div>
+                    <div>@step.Content</div>
+                </div>
             </div>
         </div>
-    </div>        
     }
 </div>
 
@@ -56,30 +56,40 @@
     @for (int i = 0; i < Model.Comments.Count; i++)
     {
         var comment = Model.Comments.ElementAt(i);
-        
+
         <div><strong>@comment.User.UserName:</strong><span>@comment.Content</span><div>@comment.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</div></div>
     }
 
 
 </div>
 
-<div>
-    @using (Ajax.BeginForm("AddComment", new {tutorialId = @Model.Id } , new AjaxOptions
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        @using (Ajax.BeginForm("AddComment", new { tutorialId = @Model.Id }, new AjaxOptions
     {
         InsertionMode = InsertionMode.InsertAfter,
         UpdateTargetId = "comments",
-        OnComplete = "clearInput"
+        OnSuccess = "clearInput",
+        OnFailure = "displayError"
     }))
-    {
-        <input type="text" id="comment-input" name="Content"/>
-        <input type="submit" value="Comment" class="k-button" />
-    }
-</div>
-
+        {
+            <div>
+                <textarea id="comment-input" name="Content"></textarea>
+                <input type="submit" value="Comment" class="k-button" />
+            </div>
+            <div class="text-error" id="error"></div>
+        }
+    </div>
+}
 <script type="text/javascript">
     function clearInput() {
         $("#comment-input").val("");
-
+        $("#error").text("");
         $("#menu").kendoMenu();
+    }
+
+    function displayError() {
+        $("#error").text("Comment must be between 2 and 500 symbols long");
     }
 </script>
