@@ -61,6 +61,7 @@ namespace TeamCentaur_LiveChat.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Email Address")]
+        [StringShouldBeMail(ErrorMessage="Field is not a valid email")]
         public string Email { get; set; }
 
         [Display(Name = "Image Url")]
@@ -70,6 +71,7 @@ namespace TeamCentaur_LiveChat.Models
         public string Description { get; set; }
 
         [Display(Name = "Age")]
+        [Range(0, 120, ErrorMessage="Age shoud be between {1} and {2}")]
         public int Age { get; set; }
 
         [Display(Name = "City")]

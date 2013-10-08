@@ -57,7 +57,7 @@ namespace TeamCentaur_LiveChat.Controllers
         {
             var result = this.db.Tutorials.AsQueryable();
 
-            if (tutorialSearch != null)
+            if (!string.IsNullOrEmpty(tutorialSearch))
             {
                 result = result.Where(t => t.Title.ToLower().Contains(tutorialSearch.ToLower()));
             }

@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace TeamCentaur_LiveChat.Areas.Admin.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private CrafterContext db;
