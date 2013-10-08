@@ -117,3 +117,22 @@ input[type="checkbox"].input-validation-error {
     .home-search .form-horizontal .control-group .controls {
         margin-left: 130px;
     }
+.no-border {
+    border: none;
+}
+
+.separate {
+    padding: 20px 0 20px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+.tutorial-full-description {
+    margin-top: 20px;
+
+}
+
+.single-comment {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #efefef;
+}

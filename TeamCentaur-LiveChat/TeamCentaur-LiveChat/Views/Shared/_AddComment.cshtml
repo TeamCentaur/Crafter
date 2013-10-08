@@ -1,3 +1,7 @@
 ﻿@model Crafter.Models.Comment
 
-<div><strong>@Model.User.UserName:</strong><span>@Model.Content</span><div>@Model.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</div></div>
+<div class="single-comment">
+    <strong>@Model.User.UserName</strong>
+    <span>on @Model.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</span>
+    <p>@Model.Content</p>
+</div>

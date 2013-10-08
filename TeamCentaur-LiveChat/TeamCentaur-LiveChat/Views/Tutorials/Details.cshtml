@@ -3,85 +3,177 @@
 @{
     ViewBag.Title = Model.Title;
 }
-<header class="hero-unit clearfix">
-    <div class="pull-left">
-        <h2>@ViewBag.Title</h2>
-        @if (Model.Image != null)
-        {
-            <img src="@Model.Image" class="img-rounded" />
-        }
-    </div>
-    <div class="pull-right">
-        <div>
-            <div><strong>Category:</strong><span>@Model.Category.Name</span></div>
-            <div><strong>Difficulty:</strong><span>@Model.Difficulty</span></div>
-            <div><strong>Completion Time:</strong><span>@Model.CompletionTime</span></div>
-            <div><strong>Eqipment Used:</strong><span>@Model.EquipmentUsed</span></div>
-            <div><strong>Upload date:</strong><span>@Model.CreatedOn.ToString("yyyy-MMM-dd")</span></div>
-            <div><strong>Uploaded by:</strong><span>@Model.User.UserName</span></div>
+@*
+
+    <header class="hero-unit clearfix">
+        <div class="pull-left">
+            <h2>@ViewBag.Title</h2>
+            @if (Model.Image != null)
+            {
+                <img src="@Model.Image" class="img-rounded" />
+            }
         </div>
-    </div>
-</header>
-
-
-
-<div><strong>Steps:</strong></div>
-<div class="accordion" id="accordion2">
-
-    @for (int i = 0; i < Model.Steps.Count(); i++)
-    {
-        var step = Model.Steps.ElementAt(i);
-
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
-                    Step @i: @step.Title
-                </a>
+        <div class="pull-right">
+            <div>
+                <div><strong>Category:</strong><span>@Model.Category.Name</span></div>
+                <div><strong>Difficulty:</strong><span>@Model.Difficulty</span></div>
+                <div><strong>Completion Time:</strong><span>@Model.CompletionTime</span></div>
+                <div><strong>Eqipment Used:</strong><span>@Model.EquipmentUsed</span></div>
+                <div><strong>Upload date:</strong><span>@Model.CreatedOn.ToString("yyyy-MMM-dd")</span></div>
+                <div><strong>Uploaded by:</strong><span>@Model.User.UserName</span></div>
             </div>
+        </div>
+    </header>
 
-            <div id=@("collapse" + i) class="accordion-body collapse in">
-                <div class="accordion-inner">
-                    <img src="@step.Image" alt="no image" />
-                    <div><strong>Description:</strong></div>
-                    <div>@step.Content</div>
+
+
+    <div><strong>Steps:</strong></div>
+    <div class="accordion" id="accordion2">
+
+        @for (int i = 0; i < Model.Steps.Count(); i++)
+        {
+            var step = Model.Steps.ElementAt(i);
+
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
+                        Step @i: @step.Title
+                    </a>
+                </div>
+
+                <div id=@("collapse" + i) class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <img src="@step.Image" alt="no image" />
+                        <div><strong>Description:</strong></div>
+                        <div>@step.Content</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
-
-<div><strong>Comments:</strong></div>
-
-<div id="comments">
-    @for (int i = 0; i < Model.Comments.Count; i++)
-    {
-        var comment = Model.Comments.ElementAt(i);
-
-        <div><strong>@comment.User.UserName:</strong><span>@comment.Content</span><div>@comment.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</div></div>
-    }
-
-
-</div>
-
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        @using (Ajax.BeginForm("AddComment", new { tutorialId = @Model.Id }, new AjaxOptions
-    {
-        InsertionMode = InsertionMode.InsertAfter,
-        UpdateTargetId = "comments",
-        OnSuccess = "clearInput",
-        OnFailure = "displayError"
-    }))
-        {
-            <div>
-                <textarea id="comment-input" name="Content"></textarea>
-                <input type="submit" value="Comment" class="k-button" />
-            </div>
-            <div class="text-error" id="error"></div>
         }
     </div>
-}
+
+    <div><strong>Comments:</strong></div>
+
+    <div id="comments">
+        @for (int i = 0; i < Model.Comments.Count; i++)
+        {
+            var comment = Model.Comments.ElementAt(i);
+
+            <div><strong>@comment.User.UserName:</strong><span>@comment.Content</span><div>@comment.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</div></div>
+        }
+
+
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            @using (Ajax.BeginForm("AddComment", new { tutorialId = @Model.Id }, new AjaxOptions
+        {
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "comments",
+            OnSuccess = "clearInput",
+            OnFailure = "displayError"
+        }))
+            {
+                <div>
+                    <textarea id="comment-input" name="Content"></textarea>
+                    <input type="submit" value="Comment" class="k-button" />
+                </div>
+                <div class="text-error" id="error"></div>
+            }
+        </div>
+    }
+*@
+
+<div class="row-fluid">
+    <div id="tutorials" class="span8">
+        <div class="tutorials-wrapper">
+            <div class="row-fluid single-tutorial separate">
+                <img src="@Model.Image" style="width:200px; height:200px" class="img-polaroid pull-left" alt="@Model.Category.Name" />
+
+                <div class="tutorial-home-description pull-left">
+                    <span class="home-tutorial-category">Category - @Model.Category.Name</span>
+                    <h2>@Model.Title</h2>
+                    <p class="tutorial-author-and-date">@Model.User.UserName on @Model.CreatedOn.ToString("dd-MMM-yyyy")</p>
+                </div>
+            </div>
+
+            <div class="row-fluid tutorial-full-description">
+                <div class="separate">
+                    <h3>Tutorial Details</h3>
+                    <p><strong>Equipment used:</strong><span>@Model.EquipmentUsed</span></p>
+                    <p><strong>Completion time: </strong><span>@Model.CompletionTime</span></p>
+                    <p><strong>Difficulty: </strong><span>@Model.Difficulty</span></p>
+                </div>
+                <p class="tutorial-description separate">@Model.Description</p>
+
+                <h3>Steps</h3>
+                <div class="accordion separate" id="accordion2">
+
+                    @for (int i = 0; i < Model.Steps.Count(); i++)
+                    {
+                        var step = Model.Steps.ElementAt(i);
+
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=@("#collapse"+ i)>
+                                    Step @i: @step.Title
+                                </a>
+                            </div>
+
+                            <div id=@("collapse" + i) class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <img src="@step.Image" alt="no image" />
+                                    <div><strong>Description:</strong></div>
+                                    <div>@step.Content</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <h3>Comments</h3>
+
+                <div id="comments">
+                    @for (int i = 0; i < Model.Comments.Count; i++)
+                    {
+                        var comment = Model.Comments.ElementAt(i);
+
+                        <div class="single-comment">
+                            <strong>@comment.User.UserName</strong>
+                            <span>on @comment.CreatedOn.ToString("dd-MMM-yyyy HH:MM:ss")</span>
+                            <p>@comment.Content</p>
+                        </div>
+                    }
+
+
+                </div>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div>
+                        @using (Ajax.BeginForm("AddComment", new { tutorialId = @Model.Id }, new AjaxOptions
+        {
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "comments",
+            OnSuccess = "clearInput",
+            OnFailure = "displayError"
+        }))
+                        {
+                            <div>
+                                <textarea id="comment-input" name="Content"></textarea>
+                                <input type="submit" value="Comment" class="k-button" />
+                            </div>
+                            <div class="text-error" id="error"></div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     function clearInput() {
         $("#comment-input").val("");
