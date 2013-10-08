@@ -27,9 +27,10 @@
                         <li>@Html.ActionLink("Tutorials", "Index", "Home", new { area = "" }, new { })</li>
                         @if (User.Identity.IsAuthenticated)
                         {
+<<<<<<< HEAD
                             <li>@Html.ActionLink("My Tutorials", "MyTutorials", "Tutorials", new { area = "" }, new { })</li>
                         }
-                       
+
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="dropdown">
@@ -40,6 +41,23 @@
                                     <li>@Html.ActionLink("Categories(not implemented)", "Categories", "Admin", new { area = "Admin" }, new { })</li>
                                 </ul>
                             </li>
+=======
+                             <li>@Html.ActionLink("My Tutorials", "MyTutorials", "Tutorials", new { area = "" }, new { })</li>
+                        }
+                       
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Tutorials", "Index", "Admin", new { area = "Admin" }, new { })</li>
+                                <li>@Html.ActionLink("Users(not implemented)", "About", "Admin", new { area = "" }, new { })</li>
+                                <li>@Html.ActionLink("Categories(not implemented)", "About", "Admin", new { area = "" }, new { })</li>
+
+                            </ul>
+                        </li>
+>>>>>>> a3bff74c37f3d55954473a43fb01f77b9320dea0
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")
